@@ -4,11 +4,14 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity()
 public class CarbonConsumption {
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int co2EmissionID;
 	
 	@Column
@@ -26,15 +29,17 @@ public class CarbonConsumption {
 	@Column
 	private long co2Emission;
 	
-	public CarbonConsumption(int co2EmissionID, int userID, Date date, TravelFactor travelType, double kmDriven,
-			long co2Emission) {
+	public static int idGenerator = 0;
+	
+	public CarbonConsumption(int userID, Date date, TravelFactor travelType, double kmDriven) {
 		super();
-		this.co2EmissionID = co2EmissionID;
+		TravelConstants c = new TravelConstants();
+		this.co2EmissionID = idGenerator+1;
 		this.userID = userID;
 		this.date = date;
 		this.travelType = travelType;
 		this.kmDriven = kmDriven;
-		this.co2Emission = co2Emission;
+		this.co2Emission = (long) (kmDriven * (c.constantsCalculator(travelType)));
 	}
 	public int getUserID() {
 		return userID;

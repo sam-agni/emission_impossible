@@ -4,11 +4,19 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
 public class User {
+	
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int userid;
 	
 	@Column
@@ -20,22 +28,26 @@ public class User {
 	@Column
 	private long mobile;
 	
-	@Column()
+	@Temporal(value = TemporalType.DATE)
+	@JsonFormat(pattern = "yyyy-MM-dd")
+	@Column
 	private Date dob;
 	
 	@Column
-	private String Address;
+	private String address;
 	
+	public static int idGenerator = 0;
 	public User() {}
 	
-	public User(int userid, String username, String email, long mobile, Date dob, String address) {
+	public User(String username, String email, long mobile, Date dob, String address) {
 		super();
-		this.userid = userid;
+		this.userid = idGenerator+1;
 		this.username = username;
 		this.email = email;
 		this.mobile = mobile;
 		this.dob = dob;
-		Address = address;
+		this.address = address;
+		idGenerator=idGenerator+1 ;
 	}
 	public int getUserid() {
 		return userid;
@@ -68,10 +80,10 @@ public class User {
 		this.dob = dob;
 	}
 	public String getAddress() {
-		return Address;
+		return address;
 	}
 	public void setAddress(String address) {
-		Address = address;
+		this.address = address;
 	}
 
 }
