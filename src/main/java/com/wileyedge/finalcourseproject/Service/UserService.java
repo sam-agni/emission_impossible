@@ -4,13 +4,16 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
 
 import com.wileyedge.finalcourseproject.Dao.IDao;
 import com.wileyedge.finalcourseproject.model.User;
 
+@Service
 public class UserService implements IService {
 	
 	@Autowired
+	@Qualifier(value="jparepos")
 	private IDao dao;
 	
 	@Override
