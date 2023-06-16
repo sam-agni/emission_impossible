@@ -27,7 +27,7 @@ public class CarbonConsumption {
 	private double kmDriven;
 	
 	@Column
-	private long co2Emission;
+	private Long co2Emission;
 	
 	public static int idGenerator = 0;
 	
@@ -71,7 +71,7 @@ public class CarbonConsumption {
 	public void setKmDriven(double kmDriven) {
 		this.kmDriven = kmDriven;
 	}
-	public long getCo2Emission() {
+	public Long getCo2Emission() {
 		return co2Emission;
 	}
 	public void setCo2Emission(long co2Emission) {

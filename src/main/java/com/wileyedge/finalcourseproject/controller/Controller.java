@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.wileyedge.finalcourseproject.Service.IService;
+import com.wileyedge.finalcourseproject.exceptions.RegistrationFailedException;
+import com.wileyedge.finalcourseproject.exceptions.UserNotFoundException;
 import com.wileyedge.finalcourseproject.model.User;
 
 @RestController
@@ -23,39 +25,39 @@ public class Controller {
 	private IService service;
 	
 	@PostMapping(path = "/register", consumes = "application/json")
-	public Integer register(@RequestBody Map<String, String> userInfo) {
-		return service.register(userInfo);
+	public String register(@RequestBody User user) throws RegistrationFailedException {
+		return service.register(user);
 	}
 	
 	@PostMapping(path = "/login", consumes = "applicaition/json")
-	public Integer login(@RequestBody Map<String, String> credentials) {
+	public String login(@RequestBody Map<String, String> credentials) throws UserNotFoundException {
 		return service.login(credentials);
 	}
 	
-	@GetMapping(path = "/profile/{user_id}")
-	public Map<String, String> getUserProfile(@PathVariable Integer userId) {
-		return service.getUserProfile(userId);
+	@GetMapping(path = "/profile/{username}")
+	public User getUserProfile(@PathVariable String username) throws UserNotFoundException {
+		return service.getUserProfile(username);
 	}
 	
-	@PostMapping(path = "/profile/edit/{user_id}", consumes = "application/json")
-	public void editUserProfile(@PathVariable Integer userId, @RequestBody Map<String, String> newInfo) {
-		service.editUserProfile(userId, newInfo);
+	@PostMapping(path = "/profile/edit/{username}", consumes = "application/json")
+	public void editUserProfile(@PathVariable String username, @RequestBody User newInfo) {
+		service.editUserProfile(username, newInfo);
 	}
 	
-	@GetMapping(path = "/activities/{user_id}/{date}")
-	public List<Map<String, String>> getActivitiesOnDay(@PathVariable Integer userId, @PathVariable Date date) {
-		return service.getActivitiesOnDay(userId, date);
+	@GetMapping(path = "/activities/{username}/{date}")
+	public List<Map<String, String>> getActivitiesOnDay(@PathVariable String username, @PathVariable Date date) throws UserNotFoundException {
+		return service.getActivitiesOnDay(username, date);
 	}
 	
-	@GetMapping(path = "/emissions/{user_id}/{date_start}/{date_end}")
-	public Map<String, String> getEmissionsDuringPeriod(@PathVariable Integer userId, 
-			@PathVariable Date dateStart, @PathVariable Date dateEnd) {
-		return service.getEmissionsDuringPeriod(userId, dateStart, dateEnd);
+	@GetMapping(path = "/emissions/{username}/{date_start}/{date_end}")
+	public Map<String, String> getEmissionsDuringPeriod(@PathVariable String username, 
+			@PathVariable Date dateStart, @PathVariable Date dateEnd) throws UserNotFoundException {
+		return service.getEmissionsDuringPeriod(username, dateStart, dateEnd);
 	}
 	
-	@PostMapping(path = "/emissions/{user_id}", consumes = "application/json")
-	public void addNewEmissionsEntry(@PathVariable Integer userId, @RequestBody Map<String, String> entry) {
-		service.addNewEmissionsEntry(userId, entry);
+	@PostMapping(path = "/emissions/{username}", consumes = "application/json")
+	public void addNewEmissionsEntry(@PathVariable String username, @RequestBody Map<String, String> entry) {
+		service.addNewEmissionsEntry(username, entry);
 	}
 	
 	/*
