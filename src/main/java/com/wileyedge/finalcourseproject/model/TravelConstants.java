@@ -15,5 +15,21 @@ public class TravelConstants {
 		}
 	}
 	
+	public static TravelFactor stringConvert(String name) {
+		if(name.equalsIgnoreCase("Small_Car")) {
+			return TravelFactor.Small_Car;
+		}
+		else if (name.equalsIgnoreCase("Heavy_Car")) {
+			return TravelFactor.Heavy_Car;
+		}
+		else if(name.equalsIgnoreCase("Trains")) {
+			return TravelFactor.Trains;
+		}
+		else if(name.equalsIgnoreCase("Planes")) {
+			return TravelFactor.Planes;
+		}
+		return null;
+	}
+	
 	
 }

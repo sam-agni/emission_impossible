@@ -27,8 +27,18 @@ public class CarbonConsumption {
 	private double kmDriven;
 	
 	@Column
-	private long co2Emission;
+	private Long co2Emission;
 	
+	public CarbonConsumption(int co2EmissionID, int userID, Date date, TravelFactor travelType, double kmDriven,
+			long co2Emission) {
+		super();
+		this.co2EmissionID = co2EmissionID;
+		this.userID = userID;
+		this.date = date;
+		this.travelType = travelType;
+		this.kmDriven = kmDriven;
+		this.co2Emission = co2Emission;
+	}
 	public static int idGenerator = 0;
 	
 	public CarbonConsumption(int userID, Date date, TravelFactor travelType, double kmDriven) {
@@ -71,7 +81,7 @@ public class CarbonConsumption {
 	public void setKmDriven(double kmDriven) {
 		this.kmDriven = kmDriven;
 	}
-	public long getCo2Emission() {
+	public Long getCo2Emission() {
 		return co2Emission;
 	}
 	public void setCo2Emission(long co2Emission) {

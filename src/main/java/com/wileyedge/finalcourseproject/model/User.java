@@ -9,37 +9,45 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.UniqueConstraint;
+
+import org.hibernate.validator.constraints.UniqueElements;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
 public class User {
-	
+
 	@Id
+	private String username;
+	
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int userid;
 	
-	@Column
-	private String username;
-	
-	@Column
+	@Column(name="email")
 	private String email;
 	
-	@Column
+	@Column(name="mobile")
 	private long mobile;
 	
 	@Temporal(value = TemporalType.DATE)
 	@JsonFormat(pattern = "yyyy-MM-dd")
-	@Column
+	@Column(name="dob")
 	private Date dob;
 	
-	@Column
+	@Column(name="address")
 	private String address;
 	
-	public static int idGenerator = 0;
-	public User() {}
+	@Column(name="password")
+	private String password; 
 	
-	public User(String username, String email, long mobile, Date dob, String address) {
+	public static int idGenerator = 0;
+	
+	public User() {
+		idGenerator=idGenerator+1 ;
+	}
+	
+	public User(int userid, String username, String email, long mobile, Date dob, String address, String password) {
 		super();
 		this.userid = idGenerator+1;
 		this.username = username;
@@ -47,6 +55,19 @@ public class User {
 		this.mobile = mobile;
 		this.dob = dob;
 		this.address = address;
+		this.password = password;
+		idGenerator=idGenerator+1 ;
+	}
+	
+	public User(String username, String email, long mobile, Date dob, String address, String password) {
+		super();
+		this.userid = idGenerator+1;
+		this.username = username;
+		this.email = email;
+		this.mobile = mobile;
+		this.dob = dob;
+		this.address = address;
+		this.password = password;
 		idGenerator=idGenerator+1 ;
 	}
 	public int getUserid() {
@@ -67,6 +88,14 @@ public class User {
 	public void setEmail(String email) {
 		this.email = email;
 	}
+	
+	public String getPassword() {
+		return password;
+	}
+	public void setPassword(String password) {
+		this.password = password;
+	}
+	
 	public long getMobile() {
 		return mobile;
 	}
