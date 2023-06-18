@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.wileyedge.finalcourseproject.Dao.IDao;
 import com.wileyedge.finalcourseproject.Service.IService;
 import com.wileyedge.finalcourseproject.exceptions.RegistrationFailedException;
 import com.wileyedge.finalcourseproject.exceptions.UserNotFoundException;
@@ -25,14 +24,11 @@ public class Controller {
 	@Autowired
 	private IService service;
 	
-	@Autowired
-	private IDao userDao;
-	
 	@PostMapping(path = "/register", consumes = "application/json")
 	public String register(@RequestBody User user) throws RegistrationFailedException {
 		return service.register(user);
 	}
-	/*
+	
 	@PostMapping(path = "/login", consumes = "applicaition/json")
 	public String login(@RequestBody Map<String, String> credentials) throws UserNotFoundException {
 		return service.login(credentials);
@@ -63,7 +59,7 @@ public class Controller {
 	public void addNewEmissionsEntry(@PathVariable String username, @RequestBody Map<String, String> entry) {
 		service.addNewEmissionsEntry(username, entry);
 	}
-*/	
+	
 	/*
 	@GetMapping(path = "/users")
 	public List<User> fetchAllUsers(){

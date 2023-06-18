@@ -20,7 +20,9 @@ import com.wileyedge.finalcourseproject.model.User;
 
 @Service
 public class UserService implements IService {
+	
 	@Autowired
+	@Qualifier(value="jparepos")
 	private IDao dao;
 
 	@Override
@@ -113,5 +115,29 @@ public class UserService implements IService {
 		
 	}
 	
+	
+	/*
+	@Override
+	public List<User> retrieveAllUsers() {
+		System.out.println("Inside retrieveAllUsers() of UserService");
+		List<User> users = dao.findAll();
+		return users;
+	}
+
+	@Override
+	public User save(User user) {
+		System.out.println("user save service");
+		User u = dao.save(user);
+		return u;
+	}
+
+	@Override
+	public CarbonConsumption addUserActivity(CarbonConsumption cc) {
+		TravelFactor mode = TravelFactor.Small_Car;
+		//CarbonConsumption activity1 = new CarbonConsumption(1,new Date(),mode,10);
+		dao.addActivity(cc);
+		return cc;
+	}
+	*/
 
 }
