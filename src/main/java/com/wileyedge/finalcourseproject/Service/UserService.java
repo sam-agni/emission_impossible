@@ -36,7 +36,7 @@ public class UserService implements IService {
 
 	@Override
 	public String login(Map<String, String> credentials) throws UserNotFoundException {
-		User u = dao.getUserByCredentials(credentials);
+		User u = dao.getUserByCredentials(credentials.get("username"), credentials.get("password"));
 		if (u == null) {
 			throw new UserNotFoundException();
 		}
@@ -55,7 +55,6 @@ public class UserService implements IService {
 	@Override
 	public void editUserProfile(String username, User newInfo) {
 		dao.editUserbyUsername(username, newInfo);
-		
 	}
 
 	@Override

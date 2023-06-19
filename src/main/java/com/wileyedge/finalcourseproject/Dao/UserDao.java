@@ -56,7 +56,7 @@ public class UserDao implements IDao {
 		String sql = "INSERT INTO Carbon_Consumption VALUES (?, ?, ?, ?, ?, ?)";
 		template.update(sql, 
 				activity.getCo2EmissionID(),
-				activity.getUserID(),
+				activity.getUsername(),
 				activity.getDate(),
 				activity.getTravelType(),
 				activity.getKmDriven(),
@@ -66,63 +66,45 @@ public class UserDao implements IDao {
 	// Get user by userid
 	public User getUserById(int uId) {
 		String sql = "SELECT * FROM User WHERE id=?";
-		return template.queryForObject(sql, new Object[] {uId}, new UserRowMapper());	
-	}
-	
-	
-	// Edit user by userid
-	public User editUserbyId(int uid) {	
-		return null;
+		return template.queryForObject(sql, new UserRowMapper(), uId);	
 	}
 	
 	//getActivitiesOnDay
-	public List<CarbonConsumption> emissionsOnDay(Date currentDate){
-		String sql = 
-				"SELECT FROM Carbon_Consumption "
-				+ "WHERE date="+currentDate;
-		List<CarbonConsumption> cc = template.query(sql, new CO2ConsumptionRowMapper());
+	public List<CarbonConsumption> getAllCarbonConsumptionByDay(String username, Date currentDate){
+		String sql = "SELECT * FROM Carbon_Consumption WHERE username=? AND date=?";
+		List<CarbonConsumption> cc = template.query(sql, new CO2ConsumptionRowMapper(), username, currentDate);
 		return cc;
 	}
 	
 	// return emissions during period
-	public List<CarbonConsumption> emissionsDuringPeriod(Date start, Date end){
-		String sql = 
-				"SELECT FROM Carbon_Consumption "
-				+ "WHERE Carbon_Consumption.date BETWEEN "
-						+start+ " AND "+end;
-		List<CarbonConsumption> cc = template.query(sql, new CO2ConsumptionRowMapper());
+	public List<CarbonConsumption> getAllCarbonConsumptionDuringPeriod(String username, Date start, Date end){
+		String sql = "SELECT * FROM Carbon_Consumption WHERE username=? AND date BETWEEN ? AND ?";
+		List<CarbonConsumption> cc = template.query(sql, new CO2ConsumptionRowMapper(), username, start, end);
 		return cc;
 	}
 
 	@Override
 	public User getUserByUsername(String uname) {
 		String sql = "SELECT * FROM User WHERE username=?";
-		return template.queryForObject(sql, new Object[] {uname}, new UserRowMapper());	
+		return template.queryForObject(sql, new UserRowMapper(), uname);	
 	}
 
 	@Override
-	public User getUserByCredentials(Map<String, String> credentials) {
-		// TODO Auto-generated method stub
-		return null;
+	public User getUserByCredentials(String uname, String password) {
+		String sql = "SELECT * FROM User WHERE username=? AND password=?";
+		return template.queryForObject(sql, new UserRowMapper(), uname, password);
 	}
 
 	@Override
 	public void editUserbyUsername(String username, User newInfo) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public List<CarbonConsumption> getAllCarbonConsumptionByDay(String username, Date date) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<CarbonConsumption> getAllCarbonConsumptionDuringPeriod(String username, Date dateStart, Date dateEnd) {
-		// TODO Auto-generated method stub
-		return null;
-
+		String sql = "UPDATE User SET email=?, mobile=?, dob=?, address=?, password=? WHERE username=?";
+		template.update(sql,
+				newInfo.getEmail(),
+				newInfo.getMobile(),
+				newInfo.getDob(),
+				newInfo.getAddress(),
+				newInfo.getPassword(),
+				username);
 	}
 
 }

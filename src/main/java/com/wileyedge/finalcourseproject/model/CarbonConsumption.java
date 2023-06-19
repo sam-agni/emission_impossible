@@ -15,7 +15,7 @@ public class CarbonConsumption {
 	private int co2EmissionID;
 	
 	@Column
-	private int userID;
+	private String username;
 	
 	@Column
 	private Date date;
@@ -29,11 +29,11 @@ public class CarbonConsumption {
 	@Column
 	private Long co2Emission;
 	
-	public CarbonConsumption(int co2EmissionID, int userID, Date date, TravelFactor travelType, double kmDriven,
+	public CarbonConsumption(int co2EmissionID, String userID, Date date, TravelFactor travelType, double kmDriven,
 			long co2Emission) {
 		super();
 		this.co2EmissionID = co2EmissionID;
-		this.userID = userID;
+		this.username = userID;
 		this.date = date;
 		this.travelType = travelType;
 		this.kmDriven = kmDriven;
@@ -41,21 +41,21 @@ public class CarbonConsumption {
 	}
 	public static int idGenerator = 0;
 	
-	public CarbonConsumption(int userID, Date date, TravelFactor travelType, double kmDriven) {
+	public CarbonConsumption(String userID, Date date, TravelFactor travelType, double kmDriven) {
 		super();
 		TravelConstants c = new TravelConstants();
 		this.co2EmissionID = idGenerator+1;
-		this.userID = userID;
+		this.username = userID;
 		this.date = date;
 		this.travelType = travelType;
 		this.kmDriven = kmDriven;
 		this.co2Emission = (long) (kmDriven * (c.constantsCalculator(travelType)));
 	}
-	public int getUserID() {
-		return userID;
+	public String getUsername() {
+		return username;
 	}
-	public void setUserID(int userID) {
-		this.userID = userID;
+	public void setUsername(String userID) {
+		this.username = userID;
 	}
 	public int getCo2EmissionID() {
 		return co2EmissionID;

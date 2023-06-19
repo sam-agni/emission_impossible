@@ -16,7 +16,7 @@ public class CO2ConsumptionRowMapper implements RowMapper<CarbonConsumption> {
 	@Override
 	public CarbonConsumption mapRow(ResultSet rs, int rowNum) throws SQLException {
 		int ccid = rs.getInt("co2EmissionID");
-		int uid = rs.getInt("userID");
+		String username = rs.getString("username");
 		Date date = rs.getDate("date");
 		String tf = rs.getString("travelType");
 		Double kmdriven = rs.getDouble("kmDriven");
@@ -24,7 +24,7 @@ public class CO2ConsumptionRowMapper implements RowMapper<CarbonConsumption> {
 		
 		TravelConstants cc = new TravelConstants();
 		TravelFactor factor = cc.stringConvert(tf);
-		CarbonConsumption c = new CarbonConsumption(ccid, uid, date, factor, kmdriven,co2Emission);
+		CarbonConsumption c = new CarbonConsumption(ccid, username, date, factor, kmdriven,co2Emission);
 		return c;
 	}
 
