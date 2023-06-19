@@ -1,9 +1,8 @@
 package com.wileyedge.finalcourseproject.Dao;
 
 import java.util.ArrayList;
-import java.util.Date;
+import java.sql.Date;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -24,10 +23,10 @@ public class UserDao implements IDao {
 	@Autowired
 	private PlatformTransactionManager transactionManager;
 	
-	private static List<User> users = new ArrayList<User>();
-	static {
-		users.add(new User("jack_02","jack@gmail.com",88997765, new Date(), "Rhodes Ave, New York City - 100", "secret"));
-	}
+//	private static List<User> users = new ArrayList<User>();
+//	static {
+//		users.add(new User("jack_02","jack@gmail.com",88997765, new Date(), "Rhodes Ave, New York City - 100", "secret"));
+//	}
 	
 	public UserDao() {
 		System.out.println("Object of UserDao created");
@@ -36,31 +35,30 @@ public class UserDao implements IDao {
 	// save a new user 
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
 	@Override
-	public User save(User user) {	
+	public int save(User user) {	
 		String sql = "INSERT INTO User VALUES (?, ?, ?, ?, ?, ?, ?)";
-		template.update(sql, 
-				user.getUsername(),
-				user.getAddress(),
-				user.getDob(),
-				user.getEmail(),
-				user.getMobile(),
-				user.getPassword(),				
-				user.getUserid());
-		return user;
+		return template.update(sql, 
+					user.getUsername(),
+					user.getAddress(),
+					user.getDob(),
+					user.getEmail(),
+					user.getMobile(),
+					user.getPassword(),				
+					user.getUserid());
 	}
 
 	@Override
 	// Given a user add an activity
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
-	public void addActivity(CarbonConsumption activity) {
+	public int addActivity(CarbonConsumption activity) {
 		String sql = "INSERT INTO Carbon_Consumption VALUES (?, ?, ?, ?, ?, ?)";
-		template.update(sql, 
-				activity.getCo2EmissionID(),
-				activity.getUsername(),
-				activity.getDate(),
-				activity.getTravelType(),
-				activity.getKmDriven(),
-				activity.getCo2Emission());
+		return template.update(sql, 
+					activity.getCo2EmissionID(),
+					activity.getUsername(),
+					activity.getDate(),
+					activity.getTravelType(),
+					activity.getKmDriven(),
+					activity.getCo2Emission());
 	}
 	
 	// Get user by userid
@@ -96,15 +94,15 @@ public class UserDao implements IDao {
 	}
 
 	@Override
-	public void editUserbyUsername(String username, User newInfo) {
+	public int editUserbyUsername(String username, User newInfo) {
 		String sql = "UPDATE User SET email=?, mobile=?, dob=?, address=?, password=? WHERE username=?";
-		template.update(sql,
-				newInfo.getEmail(),
-				newInfo.getMobile(),
-				newInfo.getDob(),
-				newInfo.getAddress(),
-				newInfo.getPassword(),
-				username);
+		return template.update(sql,
+					newInfo.getEmail(),
+					newInfo.getMobile(),
+					newInfo.getDob(),
+					newInfo.getAddress(),
+					newInfo.getPassword(),
+					username);
 	}
 
 }

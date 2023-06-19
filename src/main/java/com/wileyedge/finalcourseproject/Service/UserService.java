@@ -1,7 +1,7 @@
 package com.wileyedge.finalcourseproject.Service;
 
 import java.util.ArrayList;
-import java.util.Date;
+import java.sql.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import com.wileyedge.finalcourseproject.Dao.IDao;
+import com.wileyedge.finalcourseproject.exceptions.EmissionInvalidException;
 import com.wileyedge.finalcourseproject.exceptions.RegistrationFailedException;
 import com.wileyedge.finalcourseproject.exceptions.UserNotFoundException;
 import com.wileyedge.finalcourseproject.model.CarbonConsumption;
@@ -27,11 +28,11 @@ public class UserService implements IService {
 
 	@Override
 	public String register(User user) throws RegistrationFailedException {
-		User u = dao.save(user);
-		if (u == null) {
+		int numRowsAffected = dao.save(user);
+		if (numRowsAffected == 0) {
 			throw new RegistrationFailedException();
 		}
-		return u.getUsername();
+		return user.getUsername();
 	}
 
 	@Override
@@ -53,8 +54,11 @@ public class UserService implements IService {
 	}
 
 	@Override
-	public void editUserProfile(String username, User newInfo) {
-		dao.editUserbyUsername(username, newInfo);
+	public void editUserProfile(String username, User newInfo) throws UserNotFoundException {
+		int numRowsAffected = dao.editUserbyUsername(username, newInfo);
+		if (numRowsAffected == 0) {
+			throw new UserNotFoundException();
+		}
 	}
 
 	@Override
@@ -109,9 +113,11 @@ public class UserService implements IService {
 	}
 
 	@Override
-	public void addNewEmissionsEntry(String username, Map<String, String> entry) {
-		// TODO Auto-generated method stub
-		
+	public void addNewEmissionsEntry(String username, CarbonConsumption entry) throws EmissionInvalidException {
+		int numRowsAffected = dao.addActivity(entry);
+		if (numRowsAffected == 0) {
+			throw new EmissionInvalidException();
+		}
 	}
 	
 	

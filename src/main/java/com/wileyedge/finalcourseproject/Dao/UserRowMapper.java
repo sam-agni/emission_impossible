@@ -2,7 +2,7 @@ package com.wileyedge.finalcourseproject.Dao;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Date;
+import java.sql.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Temporal;

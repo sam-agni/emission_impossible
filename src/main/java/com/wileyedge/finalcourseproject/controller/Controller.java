@@ -1,10 +1,8 @@
 package com.wileyedge.finalcourseproject.controller;
 
-import java.util.Date;
+import java.sql.Date;
 import java.util.List;
 import java.util.Map;
-
-import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,8 +12,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.wileyedge.finalcourseproject.Service.IService;
+import com.wileyedge.finalcourseproject.exceptions.EmissionInvalidException;
 import com.wileyedge.finalcourseproject.exceptions.RegistrationFailedException;
 import com.wileyedge.finalcourseproject.exceptions.UserNotFoundException;
+import com.wileyedge.finalcourseproject.model.CarbonConsumption;
 import com.wileyedge.finalcourseproject.model.User;
 
 @RestController
@@ -40,7 +40,7 @@ public class Controller {
 	}
 	
 	@PostMapping(path = "/profile/edit/{username}", consumes = "application/json")
-	public void editUserProfile(@PathVariable String username, @RequestBody User newInfo) {
+	public void editUserProfile(@PathVariable String username, @RequestBody User newInfo) throws UserNotFoundException {
 		service.editUserProfile(username, newInfo);
 	}
 	
@@ -56,7 +56,7 @@ public class Controller {
 	}
 	
 	@PostMapping(path = "/emissions/{username}", consumes = "application/json")
-	public void addNewEmissionsEntry(@PathVariable String username, @RequestBody Map<String, String> entry) {
+	public void addNewEmissionsEntry(@PathVariable String username, @RequestBody CarbonConsumption entry) throws EmissionInvalidException {
 		service.addNewEmissionsEntry(username, entry);
 	}
 	
