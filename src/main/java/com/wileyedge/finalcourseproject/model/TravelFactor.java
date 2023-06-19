@@ -1,10 +1,10 @@
 package com.wileyedge.finalcourseproject.model;
 
 public enum TravelFactor{
-	Small_Car(1),
-	Heavy_Car(2),
-	Trains(3),
-	Planes(4);
+	Small_Car(0),
+	Heavy_Car(1),
+	Trains(2),
+	Planes(3);
 
 	int t;
 	TravelFactor(int i) {
