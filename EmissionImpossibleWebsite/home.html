@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="home.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script src="ajax.js"></script>
+        <title>Emission Impossible</title>
+    </head>
+<body>
+    <div>
+        <nav>
+            <ul>
+                <li><a href="home.html">Home</a></li>
+                <li><a href="profile.html">Profile</a></li>
+                <li><a href="emission_diary.html">Emission Diary</a></li>
+                <li><a href="news.html">News and Updates</a></li>
+            </ul>
+        </nav>
+    </div>
+    <div class="container home-container">
+        <div class="home-line-chart">
+            
+        </div>
+        <div class="middle-container">
+            <div class="button-container">
+                <button id="monthly-button" class="active">Monthly Progress</button>
+                <button id="yearly-button">Yearly Progress</button>
+            </div>
+            
+            <div class="home-stat-box">
+                <p id="home-stat-box-first-line"></p>
+                <p id="home-stat-box-second-line"></p>
+                <p id="home-stat-box-third-line"></p>
+                <p id="home-stat-box-fourth-line"></p>
+                <p id="home-stat-box-fifth-line"></p>
+            </div>
+        </div>
+        <div class="home-pie-chart">
+            <canvas id="myChart"></canvas>
+        </div>
+    </div>
+</body>
+</html>
