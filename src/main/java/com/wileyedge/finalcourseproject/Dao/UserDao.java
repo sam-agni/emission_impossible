@@ -57,7 +57,7 @@ public class UserDao implements IDao {
 					activity.getCo2Emission(),
 					activity.getDate(),
 					activity.getKmDriven(),
-					activity.getTravelType(),
+					activity.getTravelType().getValue(),
 					activity.getUsername());
 					
 	}
