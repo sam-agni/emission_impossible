@@ -18,7 +18,7 @@ $(document).ready(function(){
 
         //alert("http://localhost:9999/login");
 
-        //alert(JSON.stringify(loginData));
+        alert(JSON.stringify(loginData));
 
         $.ajax({
             type: 'POST',
@@ -66,14 +66,12 @@ $(document).ready(function(){
         //alert(JSON.stringify(registerData));
 
         $.ajax({
-            type: 'POST',
+            type: 'PUT',
             url: 'http://localhost:9999/register',
             data: JSON.stringify(registerData),
             contentType: 'application/json',
             success: function(data) {
-                localStorage.setItem("username", registerData.username);
                 alert('Registration successful');
-                window.location.href = "home.html";
             },
             error: function(jqXHR, textStatus, errorThrown) {
                 if (jqXHR.responseJSON) {
@@ -83,13 +81,15 @@ $(document).ready(function(){
                 }
             }
         })
+
+        window.location.href = "home.html";
     });
 
     if (window.location.pathname.endsWith('home.html')){
         // Get username from localStorage
         var username = localStorage.getItem("username");
 
-        //alert(username);
+        alert(username);
 
         // Call the getHomeStatData function and handle the result using a Promise
         getHomeStatData()
@@ -102,6 +102,7 @@ $(document).ready(function(){
                 console.error("Error:", error);
             });
 
+        alert("#1");
         
         function getHomeStatData() {
             return new Promise(function(resolve, reject) {
@@ -116,7 +117,7 @@ $(document).ready(function(){
                 formattedStartDate = startDate.toISOString().split('T')[0];
                 formattedEndDate = endDate.toISOString().split('T')[0];
         
-                //alert(JSON.stringify('http://localhost:9999/emissions/' + username + '/' + formattedStartDate + '/' + formattedEndDate));
+                alert(JSON.stringify('http://localhost:9999/emissions/' + username + '/' + formattedStartDate + '/' + formattedEndDate));
 
                 $.ajax({
                     type: 'GET',
@@ -175,15 +176,15 @@ $(document).ready(function(){
             if(period == "year"){
                 $("#home-stat-box-first-line").text(`Your carbon footprint for this year is:`);
                 $("#home-stat-box-second-line").html(emissionsDataArray.total + ' Kg of CO<sub>2</sub>');
-                $("#home-stat-box-third-line").text(`That's ` + emissionsDataArray.total/100 + ` plane trip(s) from Paris to New York`);
-                $("#home-stat-box-fourth-line").text(`or ` + emissionsDataArray.total/10 + ` km driven by an average car`);
-                $("#home-stat-box-fifth-line").text(`or ` + emissionsDataArray.total/5 + ` trees worth of carbon capture per year`);
+                $("#home-stat-box-third-line").text(`That's 10 plane trip(s) from x to y`);
+                $("#home-stat-box-fourth-line").text(`or 600 km driven by an average car`);
+                $("#home-stat-box-fifth-line").text(`or 60 trees worth of carbon capture per year`);
             }else if(period == "month"){
                 $("#home-stat-box-first-line").text(`Your carbon footprint for this month is:`);
                 $("#home-stat-box-second-line").html(emissionsDataArray.total + ' Kg of CO<sub>2</sub>');
-                $("#home-stat-box-third-line").text(`That's ` + emissionsDataArray.total/100 + ` plane trip(s) from Paris to New York`);
-                $("#home-stat-box-fourth-line").text(`or ` + emissionsDataArray.total/10 + ` km driven by an average car`);
-                $("#home-stat-box-fifth-line").text(`or ` + emissionsDataArray.total/5 + ` trees worth of carbon capture per year`);
+                $("#home-stat-box-third-line").text(`That's 1 plane trip(s) from x to y`);
+                $("#home-stat-box-fourth-line").text(`or 60 km driven by an average car`);
+                $("#home-stat-box-fifth-line").text(`or 6 trees worth of carbon capture per year`);
             }
         }
     }
@@ -193,13 +194,13 @@ $(document).ready(function(){
 function drawPieChart(emissionsDataArray) {
     var ctx = document.getElementById('myChart').getContext('2d');
 
-    //alert(JSON.stringify(emissionsDataArray))
+    alert(JSON.stringify(emissionsDataArray))
 
-    //alert(JSON.stringify(parseFloat(emissionsDataArray.byTrain)))
+    alert(JSON.stringify(parseFloat(emissionsDataArray.byTrain)))
 
-    //total = parseFloat(emissionsDataArray.byTrain) + parseFloat(emissionsDataArray.byPlane) + parseFloat(emissionsDataArray.byHeavyCar) + parseFloat(emissionsDataArray.bySmallCar)
+    total = parseFloat(emissionsDataArray.byTrain) + parseFloat(emissionsDataArray.byPlane) + parseFloat(emissionsDataArray.byHeavyCar) + parseFloat(emissionsDataArray.bySmallCar)
 
-    //alert(total);
+    alert(total);
 
     // If myChart is not null, destroy it before drawing a new one
     if(myChart != null){
@@ -209,7 +210,7 @@ function drawPieChart(emissionsDataArray) {
     myChart = new Chart(ctx, {
         type: 'pie',
         data: {
-            labels: ['Train', 'Plane', 'Heavy Car', 'Small Car'],
+            labels: ['Car', 'Bus', 'Train', 'Plane'],
             datasets: [{
                 label: 'Kg CO2',
                 data: [parseFloat(emissionsDataArray.byTrain), parseFloat(emissionsDataArray.byPlane), parseFloat(emissionsDataArray.byHeavyCar), parseFloat(emissionsDataArray.bySmallCar)],

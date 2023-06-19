@@ -98,3 +98,23 @@ nav ul li a {
     display: flex;
     align-items: center;
 }
+
+#home-stat-box-first-line {
+    font-size: 25px;
+}
+
+#home-stat-box-second-line {
+    font-size: 30px;
+}
+
+#home-stat-box-third-line {
+    font-size: 25px;
+}
+
+#home-stat-box-fourth-line {
+    font-size: 25px;
+}
+
+#home-stat-box-fifth-line {
+    font-size: 25px;
+}
