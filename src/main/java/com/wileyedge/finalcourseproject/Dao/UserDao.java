@@ -54,11 +54,12 @@ public class UserDao implements IDao {
 		String sql = "INSERT INTO Carbon_Consumption VALUES (?, ?, ?, ?, ?, ?)";
 		return template.update(sql, 
 					activity.getCo2EmissionID(),
-					activity.getUsername(),
+					activity.getCo2Emission(),
 					activity.getDate(),
-					activity.getTravelType(),
 					activity.getKmDriven(),
-					activity.getCo2Emission());
+					activity.getTravelType(),
+					activity.getUsername());
+					
 	}
 	
 	// Get user by userid

@@ -39,12 +39,16 @@ public class CarbonConsumption {
 		this.kmDriven = kmDriven;
 		this.co2Emission = co2Emission;
 	}
-	public static int idGenerator = 0;
+	//public static int idGenerator = 0;
+	
+	public CarbonConsumption() {
+		
+	}
 	
 	public CarbonConsumption(String userID, Date date, TravelFactor travelType, double kmDriven) {
 		super();
 		TravelConstants c = new TravelConstants();
-		this.co2EmissionID = idGenerator+1;
+		//this.co2EmissionID = idGenerator+1;
 		this.username = userID;
 		this.date = date;
 		this.travelType = travelType;

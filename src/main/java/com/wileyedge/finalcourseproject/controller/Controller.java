@@ -5,12 +5,15 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.wileyedge.finalcourseproject.Service.IService;
 import com.wileyedge.finalcourseproject.exceptions.EmissionInvalidException;
 import com.wileyedge.finalcourseproject.exceptions.RegistrationFailedException;
@@ -19,6 +22,7 @@ import com.wileyedge.finalcourseproject.model.CarbonConsumption;
 import com.wileyedge.finalcourseproject.model.User;
 
 @RestController
+@CrossOrigin(origins = "*")
 public class Controller {
 
 	@Autowired
@@ -29,8 +33,9 @@ public class Controller {
 		return service.register(user);
 	}
 	
-	@PostMapping(path = "/login", consumes = "applicaition/json")
+	@PostMapping(path = "/login", consumes = "application/json")
 	public String login(@RequestBody Map<String, String> credentials) throws UserNotFoundException {
+		System.out.println(credentials);
 		return service.login(credentials);
 	}
 	
@@ -49,9 +54,9 @@ public class Controller {
 		return service.getActivitiesOnDay(username, date);
 	}
 	
-	@GetMapping(path = "/emissions/{username}/{date_start}/{date_end}")
+	@GetMapping(path = "/emissions/{username}/{dateStart}/{dateEnd}")
 	public Map<String, String> getEmissionsDuringPeriod(@PathVariable String username, 
-			@PathVariable Date dateStart, @PathVariable Date dateEnd) throws UserNotFoundException {
+			@PathVariable @DateTimeFormat(pattern= "yyyy-MM-dd") Date dateStart, @PathVariable @DateTimeFormat(pattern= "yyyy-MM-dd") Date dateEnd) throws UserNotFoundException {
 		return service.getEmissionsDuringPeriod(username, dateStart, dateEnd);
 	}
 	

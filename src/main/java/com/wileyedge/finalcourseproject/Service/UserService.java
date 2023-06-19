@@ -23,7 +23,6 @@ import com.wileyedge.finalcourseproject.model.User;
 public class UserService implements IService {
 	
 	@Autowired
-	@Qualifier(value="jparepos")
 	private IDao dao;
 
 	@Override
