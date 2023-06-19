@@ -18,12 +18,11 @@ public class CO2ConsumptionRowMapper implements RowMapper<CarbonConsumption> {
 		int ccid = rs.getInt("co2EmissionID");
 		String username = rs.getString("username");
 		Date date = rs.getDate("date");
-		String tf = rs.getString("travelType");
-		Double kmdriven = rs.getDouble("kmDriven");
+		int tf = rs.getInt("travel_type");
+		Double kmdriven = rs.getDouble("km_driven");
 		Long co2Emission = rs.getLong("co2Emission");
 		
-		TravelConstants cc = new TravelConstants();
-		TravelFactor factor = cc.stringConvert(tf);
+		TravelFactor factor = TravelFactor.fromInt(tf);
 		CarbonConsumption c = new CarbonConsumption(ccid, username, date, factor, kmdriven,co2Emission);
 		return c;
 	}

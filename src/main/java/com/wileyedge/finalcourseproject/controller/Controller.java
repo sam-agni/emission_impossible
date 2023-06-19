@@ -50,7 +50,7 @@ public class Controller {
 	}
 	
 	@GetMapping(path = "/activities/{username}/{date}")
-	public List<Map<String, String>> getActivitiesOnDay(@PathVariable String username, @PathVariable Date date) throws UserNotFoundException {
+	public List<Map<String, String>> getActivitiesOnDay(@PathVariable String username, @PathVariable @DateTimeFormat(pattern= "yyyy-MM-dd") Date date) throws UserNotFoundException {
 		return service.getActivitiesOnDay(username, date);
 	}
 	

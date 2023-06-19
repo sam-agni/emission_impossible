@@ -14,6 +14,21 @@ public enum TravelFactor{
 		return t;
 	}
 	
+	public static TravelFactor fromInt(int i) {
+		switch (i) {
+		case 0:
+			return TravelFactor.Small_Car;
+		case 1:
+			return TravelFactor.Heavy_Car;
+		case 2:
+			return TravelFactor.Trains;
+		case 3:
+			return TravelFactor.Planes;
+		default:
+			return TravelFactor.Small_Car;
+		}
+	}
+	
 	@Override
 	public String toString() {
 		String result = "";
