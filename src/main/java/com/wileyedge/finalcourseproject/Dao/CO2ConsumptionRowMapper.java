@@ -2,7 +2,7 @@ package com.wileyedge.finalcourseproject.Dao;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Date;
+import java.util.Date;
 
 import org.springframework.jdbc.core.RowMapper;
 
