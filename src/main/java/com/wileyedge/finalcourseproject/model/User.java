@@ -30,6 +30,9 @@ public class User {
 	@Column(name="mobile")
 	private long mobile;
 	
+	@Column
+	private String name;
+	
 	@Temporal(value = TemporalType.DATE)
 	@JsonFormat(pattern = "yyyy-MM-dd")
 	@Column(name="dob")
@@ -47,10 +50,11 @@ public class User {
 		idGenerator=idGenerator+1 ;
 	}
 	
-	public User(int userid, String username, String email, long mobile, Date dob, String address, String password) {
+	public User(int userid, String username, String name, String email, long mobile, Date dob, String address, String password) {
 		super();
 		this.userid = idGenerator+1;
 		this.username = username;
+		this.name = name;
 		this.email = email;
 		this.mobile = mobile;
 		this.dob = dob;
@@ -59,10 +63,11 @@ public class User {
 		idGenerator=idGenerator+1 ;
 	}
 	
-	public User(String username, String email, long mobile, Date dob, String address, String password) {
+	public User(String username, String name, String email, long mobile, Date dob, String address, String password) {
 		super();
 		this.userid = idGenerator+1;
 		this.username = username;
+		this.name = name;
 		this.email = email;
 		this.mobile = mobile;
 		this.dob = dob;
@@ -82,6 +87,13 @@ public class User {
 	public void setUsername(String username) {
 		this.username = username;
 	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+
 	public String getEmail() {
 		return email;
 	}

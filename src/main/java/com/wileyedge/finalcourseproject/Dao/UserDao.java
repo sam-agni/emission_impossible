@@ -36,13 +36,14 @@ public class UserDao implements IDao {
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
 	@Override
 	public int save(User user) {	
-		String sql = "INSERT INTO User VALUES (?, ?, ?, ?, ?, ?, ?)";
+		String sql = "INSERT INTO User VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 		return template.update(sql, 
 					user.getUsername(),
 					user.getAddress(),
 					user.getDob(),
 					user.getEmail(),
 					user.getMobile(),
+					user.getName(),
 					user.getPassword(),				
 					user.getUserid());
 	}
@@ -96,8 +97,9 @@ public class UserDao implements IDao {
 
 	@Override
 	public int editUserbyUsername(String username, User newInfo) {
-		String sql = "UPDATE User SET email=?, mobile=?, dob=?, address=?, password=? WHERE username=?";
+		String sql = "UPDATE User SET name=?, email=?, mobile=?, dob=?, address=?, password=? WHERE username=?";
 		return template.update(sql,
+					newInfo.getName(),
 					newInfo.getEmail(),
 					newInfo.getMobile(),
 					newInfo.getDob(),

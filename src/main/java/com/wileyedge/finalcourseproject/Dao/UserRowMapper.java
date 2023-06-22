@@ -19,13 +19,14 @@ public class UserRowMapper implements RowMapper<User> {
 	public User mapRow(ResultSet rs, int rowNum) throws SQLException {
 		int id = rs.getInt("userid");
 		String username = rs.getString("username");
+		String name = rs.getString("name");
 		String email = rs.getString("email");
 		long mobile =  rs.getLong("mobile");
 		Date dob = rs.getDate("dob");
 		String address = rs.getString("address");
 		String password = rs.getString("password");
 		
-		User e = new User(id, username, email,mobile,dob,address,password);
+		User e = new User(id, username, name, email,mobile,dob,address,password);
 		return e;
 	}
 
