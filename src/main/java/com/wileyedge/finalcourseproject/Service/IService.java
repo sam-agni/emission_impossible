@@ -17,7 +17,7 @@ public interface IService {
 	public User getUserProfile(String username) throws UserNotFoundException;
 	public void editUserProfile(String username, User newInfo) throws UserNotFoundException;
 	public List<Map<String, String>> getActivitiesOnDay(String username, Date date) throws UserNotFoundException;
-	public Map<String, String> getEmissionsDuringPeriod(String username, Date dateStart, Date dateEnd) throws UserNotFoundException;
+	public Map<String, Object> getEmissionsDuringPeriod(String username, Date dateStart, Date dateEnd) throws UserNotFoundException;
 	public void addNewEmissionsEntry(String username, CarbonConsumption entry) throws EmissionInvalidException;
 	
 	/*

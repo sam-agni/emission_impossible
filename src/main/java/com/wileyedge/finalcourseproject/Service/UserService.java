@@ -1,10 +1,14 @@
 package com.wileyedge.finalcourseproject.Service;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -83,34 +87,59 @@ public class UserService implements IService {
 	}
 
 	@Override
-	public Map<String, String> getEmissionsDuringPeriod(String username, Date dateStart, Date dateEnd) throws UserNotFoundException {
-		List<CarbonConsumption> activities = dao.getAllCarbonConsumptionDuringPeriod(username, dateStart, dateEnd);
-		if (activities == null) {
-			throw new UserNotFoundException();
-		}
-		Long bySmallCar = (long) 0, byHeavyCar = (long) 0, byTrain = (long) 0;
-		Long byPlane = (long) 0, total = (long) 0;
-		for (CarbonConsumption cc : activities) {
-			if (cc.getTravelType() == TravelFactor.Small_Car) {
-				bySmallCar += cc.getCo2Emission();
-			} else if (cc.getTravelType() == TravelFactor.Heavy_Car) {
-				byHeavyCar += cc.getCo2Emission();
-			} else if (cc.getTravelType() == TravelFactor.Trains) {
-				byTrain += cc.getCo2Emission();
-			} else if (cc.getTravelType() == TravelFactor.Planes) {
-				byPlane += cc.getCo2Emission();
-			}
-			total += cc.getCo2Emission();
-		}
-		Map<String, String> result = new HashMap<>();
-		result.put("bySmallCar", bySmallCar.toString());
-		result.put("byHeavyCar", byHeavyCar.toString());
-		result.put("byTrain", byTrain.toString());
-		result.put("byPlane", byPlane.toString());
-		result.put("total", total.toString());
+	public Map<String, Object> getEmissionsDuringPeriod(String username, Date dateStart, Date dateEnd) throws UserNotFoundException {
+	    List<CarbonConsumption> activities = dao.getAllCarbonConsumptionDuringPeriod(username, dateStart, dateEnd);
+	    if (activities == null) {
+	        throw new UserNotFoundException();
+	    }
 
-		return result;
+	    Long bySmallCar = 0L, byHeavyCar = 0L, byTrain = 0L, byPlane = 0L, total = 0L;
+	    Map<String, Long> dateToTotalMap = new LinkedHashMap<>(); // Maintain insertion order
+
+	    for (CarbonConsumption cc : activities) {
+	        if (cc.getTravelType() == TravelFactor.Small_Car) {
+	            bySmallCar += cc.getCo2Emission();
+	        } else if (cc.getTravelType() == TravelFactor.Heavy_Car) {
+	            byHeavyCar += cc.getCo2Emission();
+	        } else if (cc.getTravelType() == TravelFactor.Trains) {
+	            byTrain += cc.getCo2Emission();
+	        } else if (cc.getTravelType() == TravelFactor.Planes) {
+	            byPlane += cc.getCo2Emission();
+	        }
+	        total += cc.getCo2Emission();
+
+	     // Add data to time series
+	        String dateLabel = new SimpleDateFormat("yyyy-MM-dd").format(cc.getDate());
+	        dateToTotalMap.put(dateLabel, dateToTotalMap.getOrDefault(dateLabel, 0L) + cc.getCo2Emission());
+	    }
+
+	    // Sort the dateToTotalMap by date
+	    Map<String, Long> sortedDateToTotalMap = new TreeMap<>(dateToTotalMap);
+
+	    // Convert the map to two lists: one for labels and one for data
+	    List<String> timeSeriesLabels = new ArrayList<>(sortedDateToTotalMap.keySet());
+	    List<Long> timeSeriesData = new ArrayList<>(sortedDateToTotalMap.values());
+	    
+	    // Calculate the cumulative sum for timeSeriesData
+	    for (int i = 1; i < timeSeriesData.size(); i++) {
+	        timeSeriesData.set(i, timeSeriesData.get(i) + timeSeriesData.get(i - 1));
+	    }
+
+	    Map<String, Object> result = new HashMap<>();
+	    result.put("bySmallCar", bySmallCar);
+	    result.put("byHeavyCar", byHeavyCar);
+	    result.put("byTrain", byTrain);
+	    result.put("byPlane", byPlane);
+	    result.put("total", total);
+	    result.put("timeSeriesLabels", timeSeriesLabels);
+	    result.put("timeSeriesData", timeSeriesData);
+
+	    return result;
 	}
+
+
+
+
 
 	@Override
 	public void addNewEmissionsEntry(String username, CarbonConsumption entry) throws EmissionInvalidException {

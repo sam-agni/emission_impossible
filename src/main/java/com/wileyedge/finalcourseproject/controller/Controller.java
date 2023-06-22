@@ -55,10 +55,11 @@ public class Controller {
 	}
 	
 	@GetMapping(path = "/emissions/{username}/{dateStart}/{dateEnd}")
-	public Map<String, String> getEmissionsDuringPeriod(@PathVariable String username, 
+	public Map<String, Object> getEmissionsDuringPeriod(@PathVariable String username, 
 			@PathVariable @DateTimeFormat(pattern= "yyyy-MM-dd") Date dateStart, @PathVariable @DateTimeFormat(pattern= "yyyy-MM-dd") Date dateEnd) throws UserNotFoundException {
 		return service.getEmissionsDuringPeriod(username, dateStart, dateEnd);
 	}
+	
 	
 	@PostMapping(path = "/emissions/{username}", consumes = "application/json")
 	public void addNewEmissionsEntry(@PathVariable String username, @RequestBody CarbonConsumption entry) throws EmissionInvalidException {
