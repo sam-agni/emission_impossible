@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="profile.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/luxon@2.2.0"></script>
+        <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-luxon@^1"></script>
+
+        <script src="ajax.js"></script>
+        <title>Emission Impossible</title>
+    </head>
+<body>
+    <div>
+        <nav>
+            <ul>
+                <li><a href="home.html">Home</a></li>
+                <li><a href="profile.html">Profile</a></li>
+                <li><a href="emission_diary.html">Emission Diary</a></li>
+                <li><a href="news.html">News and Updates</a></li>
+            </ul>
+        </nav>
+    </div>
+    <div class="container profile-container">
+        <div class="edit-details">
+            <div class="user-details">
+                <h2>Your details</h2>
+                <form id="editForm">
+                    <input class="edit-input" placeholder="Name" required id="name">
+                    <input class="edit-input" placeholder="Username" required id="username">
+                    <input class="edit-input" type="email" placeholder="Email Address" required id="email">
+                    <input class="edit-input" type="date" placeholder="Date of Birth" required id="dob">
+                    <input class="edit-input" type="number" placeholder="Mobile" required id="mobile">
+                    <input class="edit-input" placeholder="Address" required id="address">
+                    
+                    <button type="submit" class="edit-button">Edit</button>
+                </form>
+            </div>
+
+            <div class="password-details">
+                <h2>Change Password</h2>
+                <form id="editForm">
+                    <input type="password" class="edit-input" placeholder="Enter New password" required id="name">
+                    <input type="password" class="edit-input" placeholder="Re-enter new password" required id="username">
+                    <button type="submit" class="edit-password-button">Change Password</button>
+                </form>
+            </div>
+        </div>
+        <div class="middle-container">
+            <div class="user-profile-box">
+
+            </div>
+            <p>Your profile picture</p>
+            <div class="button-container">
+                <button id="change-profile-picture-button">Change</button>
+            </div>
+
+            <div class="logout-button-container">
+                <button id="logout-button">Logout</button>
+            </div>
+            
+        </div>
+        <div class="user-goals">
+            <h2>Your goals</h2>
+            <h3>I want to have an emission level better than:</h3>
+            <select class="large-dropdown">
+                <option value="option1">Option 1</option>
+                <option value="option2">Option 2</option>
+                <option value="option3">Option 3</option>
+            </select>
+
+            <h3 class="set-manual-title">Set value manually:</h3>
+            <div class="input-row">
+                <input class="manual-carbon-entry" placeholder="" required id="name">
+                <p class="input-description">tCO2e / year</p>
+            </div>
+            
+
+        </div>
+    </div>
+</body>
+</html>

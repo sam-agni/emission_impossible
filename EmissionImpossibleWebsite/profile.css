@@ -1,0 +1,275 @@
+body {
+    background-color: #F0F0F0;
+    margin: 0;
+    height: 100vh;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+nav {
+    background-color: #f8f9fa;
+    padding: 10px 0;
+}
+
+nav ul {
+    list-style-type: none;
+    text-align: center;
+}
+
+nav ul li {
+    display: inline;
+    margin-right: 20px;
+}
+
+nav ul li a {
+    text-decoration: none;
+    color: #333;
+    font-size: 20px;
+}
+
+
+.profile-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.button-container {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 5px;
+}
+
+.button-container button{
+    background-color: #4CAF50; /* On state */
+    color: white;
+}
+
+.logout-button-container {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 250px;
+}
+
+.edit-button {
+    width: 50%;
+    display: block;
+    margin: auto;
+    padding: 10px;
+    border: none;
+    background-color: #4CAF50; /* On state */
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    margin-top: 3px;
+    font-size: 20px;
+    cursor: pointer;
+    border-radius: 12px;
+}
+
+.logout-button-container button{
+    background-color: #b5312a;
+    color: white;
+    width: 100%;
+    display: block;
+    padding: 10px;
+    border: none;
+    color: white;
+    text-align: center;
+    margin-top: 70px;
+    font-size: 25px;
+    cursor: pointer;
+    border-radius: 12px;
+}
+
+.middle-container{
+    padding: 10px;
+    border: none;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    margin: 4px 2px;
+    border-radius: 12px;
+}
+
+#change-profile-picture-button{
+    padding: 10px;
+    border: none;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 12px;
+}
+
+.user-profile-box {
+    width: 150px;
+    height: 150px;
+    padding: 20px;
+    margin-top: 60px;
+    border-radius: 10px;
+    background: white;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.user-goals {
+    width: 400px;
+    height: 300px;
+    padding: 20px;
+    padding-top: 0px;
+    margin: 56px 100px;
+    border-radius: 10px;
+    background: white;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: column;
+}
+
+.set-manual-title {
+    margin-top: 40px;
+    margin-bottom: 10px;
+}
+
+.manual-carbon-entry {
+    width: 30%;
+    height: 20px;
+    margin: 10px 0;
+    margin-right: 10px;
+    font-size: 21px;
+    text-align: center;
+}
+
+.input-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    position: relative; 
+}
+
+.input-description {
+    position: absolute;
+    left: calc(67%); /* Adjust this to move the <p> element to the right */
+}
+
+.large-dropdown {
+    width: 300px;
+    height: 40px;
+    font-size: 18px;
+  }
+
+.user-details {
+    width: 400px;
+    height: 405px;
+    padding: 20px;
+    padding-top: 0px;
+    margin: 56px 100px;
+    margin-bottom: 0px;
+    border-radius: 10px;
+    background: white;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: column;
+}
+
+.password-details {
+    width: 400px;
+    height: 195px;
+    padding: 20px;
+    padding-top: 8px;
+    margin: 56px 100px;
+    margin-top: 25px;
+    border-radius: 10px;
+    background: white;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: column;
+}
+
+.password-details h2{
+    margin: 10px 0px;
+}
+
+.edit-input {
+    width: 100%;  
+    height: 25px;
+    margin: 10px 0;
+    font-size: 21px;
+    text-align: center;
+}
+
+.edit-button {
+    width: 50%;
+    display: block;
+    margin: auto;
+    padding: 10px;
+    border: none;
+    background-color: #4CAF50; /* On state */
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    margin-top: 3px;
+    font-size: 20px;
+    cursor: pointer;
+    border-radius: 12px;
+}
+
+.edit-password-button {
+    width: 50%;
+    display: block;
+    margin: auto;
+    padding: 10px;
+    border: none;
+    background-color: #4CAF50; /* On state */
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    margin-top: 3px;
+    font-size: 20px;
+    cursor: pointer;
+    border-radius: 12px;
+}
+
+.edit-details input{
+    border-radius: 4px;
+    border-width: 1px;
+}
+
+.user-details h2 {
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+#user-profile-box-first-line {
+    font-size: 25px;
+}
+
+#user-profile-box-second-line {
+    font-size: 30px;
+}
+
+#user-profile-box-third-line {
+    font-size: 25px;
+}
+
+#user-profile-box-fourth-line {
+    font-size: 25px;
+}
+
+#user-profile-box-fifth-line {
+    font-size: 25px;
+}

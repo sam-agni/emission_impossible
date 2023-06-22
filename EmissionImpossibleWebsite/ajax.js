@@ -1,4 +1,5 @@
-var myChart = null;
+var myPieChart = null;
+var myLineChart = null;
 
 $(document).ready(function(){
 
@@ -93,10 +94,11 @@ $(document).ready(function(){
 
         // Call the getHomeStatData function and handle the result using a Promise
         getHomeStatData()
-            .then(emissionsDataArray => {
+            .then(emissionsData => {
                 // These functions will run only after getHomeStatData() has completed
-                updateStatBox("month", emissionsDataArray);
-                drawPieChart(emissionsDataArray);
+                updateStatBox("month", emissionsData);
+                drawPieChart(emissionsData);
+                drawLineChart(emissionsData)
             })
             .catch(error => {
                 console.error("Error:", error);
@@ -107,11 +109,11 @@ $(document).ready(function(){
             return new Promise(function(resolve, reject) {
                 endDate = new Date();
         
-                if ($("#monthly-button").hasClass('active')){
-                    startDate = new Date(Date.UTC(endDate.getUTCFullYear(), endDate.getUTCMonth(), 1));
-                } else if ($("#yearly-button").hasClass('active')){
-                    startDate = new Date(Date.UTC(endDate.getUTCFullYear(), 0, 1));
-                }
+                if ($("#monthly-button").hasClass('active')) {
+                    startDate = luxon.DateTime.local(endDate.getFullYear(), endDate.getMonth() + 1, 1).toJSDate();
+                  } else if ($("#yearly-button").hasClass('active')) {
+                    startDate = luxon.DateTime.local(endDate.getFullYear(), 1, 1).toJSDate();
+                  }
         
                 formattedStartDate = startDate.toISOString().split('T')[0];
                 formattedEndDate = endDate.toISOString().split('T')[0];
@@ -121,9 +123,9 @@ $(document).ready(function(){
                 $.ajax({
                     type: 'GET',
                     url: 'http://localhost:9999/emissions/' + username + '/' + formattedStartDate + '/' + formattedEndDate,
-                    success: function(emissionsDataArray) {
+                    success: function(emissionsData) {
                         // Resolve the promise with the received data
-                        resolve(emissionsDataArray);
+                        resolve(emissionsData);
                     },
                     error: function(jqXHR, textStatus, errorThrown) {
                         if (jqXHR.responseJSON) {
@@ -144,10 +146,11 @@ $(document).ready(function(){
             $("#yearly-button").removeClass('active');
         
             getHomeStatData()
-                .then(emissionsDataArray => {
+                .then(emissionsData => {
                     // these functions will run only after getHomeStatData() has completed
-                    updateStatBox("month", emissionsDataArray);
-                    drawPieChart(emissionsDataArray);
+                    updateStatBox("month", emissionsData);
+                    drawPieChart(emissionsData);
+                    drawLineChart(emissionsData)
                 })
                 .catch(error => {
                     console.error("Error:", error);
@@ -159,10 +162,11 @@ $(document).ready(function(){
             $("#monthly-button").removeClass('active');
         
             getHomeStatData()
-                .then(emissionsDataArray => {
+                .then(emissionsData => {
                     // These functions will run only after getHomeStatData() has completed
-                    updateStatBox("year", emissionsDataArray);
-                    drawPieChart(emissionsDataArray);
+                    updateStatBox("year", emissionsData);
+                    drawPieChart(emissionsData);
+                    drawLineChart(emissionsData)
                 })
                 .catch(error => {
                     console.error("Error:", error);
@@ -170,49 +174,69 @@ $(document).ready(function(){
         });
         
 
-        function updateStatBox(period, emissionsDataArray) {
+        function updateStatBox(period, emissionsData) {
 
             if(period == "year"){
-                $("#home-stat-box-first-line").text(`Your carbon footprint for this year is:`);
-                $("#home-stat-box-second-line").html(emissionsDataArray.total + ' Kg of CO<sub>2</sub>');
-                $("#home-stat-box-third-line").text(`That's ` + emissionsDataArray.total/100 + ` plane trip(s) from Paris to New York`);
-                $("#home-stat-box-fourth-line").text(`or ` + emissionsDataArray.total/10 + ` km driven by an average car`);
-                $("#home-stat-box-fifth-line").text(`or ` + emissionsDataArray.total/5 + ` trees worth of carbon capture per year`);
+                $("#home-stat-box-first-line").html(`Your carbon footprint for this year is:`);
+                $("#home-stat-box-second-line").html(emissionsData.total);
+                $("#home-stat-box-third-line").html('Kg of CO<sub>2</sub>');
+                $("#home-stat-box-fourth-line").html(`That's <b>` + emissionsData.total/100 + `</b> plane trip(s) from Paris to New York`);
+                $("#home-stat-box-fifth-line").html(`or <b>` + emissionsData.total/10 + `</b> km driven by an average car`);
+                $("#home-stat-box-sixth-line").html(`or <b>` + emissionsData.total/5 + `</b> trees worth of carbon capture per year`);
             }else if(period == "month"){
-                $("#home-stat-box-first-line").text(`Your carbon footprint for this month is:`);
-                $("#home-stat-box-second-line").html(emissionsDataArray.total + ' Kg of CO<sub>2</sub>');
-                $("#home-stat-box-third-line").text(`That's ` + emissionsDataArray.total/100 + ` plane trip(s) from Paris to New York`);
-                $("#home-stat-box-fourth-line").text(`or ` + emissionsDataArray.total/10 + ` km driven by an average car`);
-                $("#home-stat-box-fifth-line").text(`or ` + emissionsDataArray.total/5 + ` trees worth of carbon capture per year`);
+                $("#home-stat-box-first-line").html(`Your carbon footprint for this month is:`);
+                $("#home-stat-box-second-line").html(emissionsData.total);
+                $("#home-stat-box-third-line").html('Kg of CO<sub>2</sub>');
+                $("#home-stat-box-fourth-line").html(`That's <b>` + emissionsData.total/100 + `</b> plane trip(s) from Paris to New York`);
+                $("#home-stat-box-fifth-line").html(`or <b>` + emissionsData.total/10 + `</b> km driven by an average car`);
+                $("#home-stat-box-sixth-line").html(`or <b>` + emissionsData.total/5 + `</b> trees worth of carbon capture per year`);
             }
+        }
+    }else if (window.location.pathname.endsWith('profile.html')){
+
+        var username = localStorage.getItem("username");
+
+        function getProfileData() {
+            return new Promise(function(resolve, reject) {
+
+                $.ajax({
+                    type: 'GET',
+                    url: 'http://localhost:9999/profile/' + username,
+                    success: function(emissionsData) {
+                        // Resolve the promise with the received data
+                        resolve(emissionsData);
+                    },
+                    error: function(jqXHR, textStatus, errorThrown) {
+                        if (jqXHR.responseJSON) {
+                            alert('Error: ' + jqXHR.responseJSON.message);
+                        } else {
+                            alert('An unknown error occurred.');
+                        }
+                        // Reject the promise on error
+                        reject(errorThrown);
+                    }
+                });
+            });
         }
     }
 
 });
 
-function drawPieChart(emissionsDataArray) {
-    var ctx = document.getElementById('myChart').getContext('2d');
-
-    //alert(JSON.stringify(emissionsDataArray))
-
-    //alert(JSON.stringify(parseFloat(emissionsDataArray.byTrain)))
-
-    //total = parseFloat(emissionsDataArray.byTrain) + parseFloat(emissionsDataArray.byPlane) + parseFloat(emissionsDataArray.byHeavyCar) + parseFloat(emissionsDataArray.bySmallCar)
-
-    //alert(total);
+function drawPieChart(emissionsData) {
+    var ctx = document.getElementById('myPieChart').getContext('2d');
 
     // If myChart is not null, destroy it before drawing a new one
-    if(myChart != null){
-        myChart.destroy();
+    if(myPieChart != null){
+        myPieChart.destroy();
     }
 
-    myChart = new Chart(ctx, {
+    myPieChart = new Chart(ctx, {
         type: 'pie',
         data: {
             labels: ['Train', 'Plane', 'Heavy Car', 'Small Car'],
             datasets: [{
                 label: 'Kg CO2',
-                data: [parseFloat(emissionsDataArray.byTrain), parseFloat(emissionsDataArray.byPlane), parseFloat(emissionsDataArray.byHeavyCar), parseFloat(emissionsDataArray.bySmallCar)],
+                data: [parseFloat(emissionsData.byTrain), parseFloat(emissionsData.byPlane), parseFloat(emissionsData.byHeavyCar), parseFloat(emissionsData.bySmallCar)],
                 backgroundColor: [
                     'rgba(255, 99, 132, 0.5)',
                     'rgba(54, 162, 235, 0.5)',
@@ -226,6 +250,55 @@ function drawPieChart(emissionsDataArray) {
         },
         options: {
             responsive: true,
+        }
+    });
+}
+
+function drawLineChart(emissionsData) {
+
+    timeSeriesData = emissionsData.timeSeriesData;
+    timeSeriesLabels = emissionsData.timeSeriesLabels;
+    timeSeriesLabels = timeSeriesLabels.map(dateStr => new Date(dateStr));
+
+    var ctx = document.getElementById('myLineChart').getContext('2d');
+
+    // If myLineChart is not null, destroy it before drawing a new one
+    if(myLineChart != null){
+        myLineChart.destroy();
+    }
+
+    myLineChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: timeSeriesLabels, // these should be dates
+            datasets: [{
+                label: 'Cumulative Kg CO2',
+                data: timeSeriesData,
+                backgroundColor: 'rgba(75, 192, 192, 0.5)', // for the area under the line
+                borderColor: 'rgba(75, 192, 192, 1)', // for the line itself
+                fill: true, // fill the area under the line
+            }]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                x: {
+                    type: 'time',
+                    time: {
+                        unit: 'day',
+                        displayFormats: {
+                            day: 'MMM D'
+                        }
+                    },
+                    title: {
+                        display: true,
+                        text: 'Date'
+                    }
+                },
+                y: {
+                    beginAtZero: true
+                }
+            }
         }
     });
 }

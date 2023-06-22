@@ -2,6 +2,7 @@ body {
     background-color: #F0F0F0;
     margin: 0;
     height: 100vh;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 nav {
@@ -65,14 +66,15 @@ nav ul li a {
 
 .home-stat-box {
     width: 500px;
-    height: 500px;
-    padding: 20px;
+    padding: 30px;
     border-radius: 10px;
     background: white;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    border: 1px solid #e5e5e5; /* Light border */
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05); /* Subtle box shadow */
     display: flex;
     flex-direction: column;
     align-items: center;
+    gap: 15px; /* Consistent spacing between lines */
 }
 
 .home-pie-chart {
@@ -100,21 +102,34 @@ nav ul li a {
 }
 
 #home-stat-box-first-line {
-    font-size: 25px;
+    font-size: 26px;
+    font-weight: 700; /* Bold for the title */
+    margin-top:0px;
+    margin-bottom: 0px;
+    color: #333;
 }
 
 #home-stat-box-second-line {
-    font-size: 30px;
+    margin-top:0px;
+    margin-bottom:0px;
+    font-size: 60px;
+    font-weight: 700; /* Bold for the title */
+    color: #333;
 }
 
 #home-stat-box-third-line {
-    font-size: 25px;
+    font-size: 25px; 
+    font-weight: 600;
+    margin-bottom:0px;
+    margin-top:0px;
+    color: #6a737d; /* Slightly lighter color for less important information */
 }
 
-#home-stat-box-fourth-line {
-    font-size: 25px;
-}
-
-#home-stat-box-fifth-line {
-    font-size: 25px;
+#home-stat-box-fourth-line,
+#home-stat-box-fifth-line,
+#home-stat-box-sixth-line {
+    font-size: 20px;
+    color: #586069; /* Even lighter color for further information */
+    margin-top:5px;
+    margin-bottom:0px;
 }
