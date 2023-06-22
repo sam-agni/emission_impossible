@@ -2,6 +2,8 @@ package com.wileyedge.finalcourseproject.Dao;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -22,7 +24,11 @@ public class UserRowMapper implements RowMapper<User> {
 		String name = rs.getString("name");
 		String email = rs.getString("email");
 		long mobile =  rs.getLong("mobile");
-		Date dob = rs.getDate("dob");
+		
+		// conversion
+        java.sql.Date sqlDate = rs.getDate("dob");
+        LocalDate dob = sqlDate.toLocalDate();
+        
 		String address = rs.getString("address");
 		String password = rs.getString("password");
 		

@@ -1,5 +1,6 @@
 package com.wileyedge.finalcourseproject.model;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -33,10 +34,9 @@ public class User {
 	@Column
 	private String name;
 	
-	@Temporal(value = TemporalType.DATE)
 	@JsonFormat(pattern = "yyyy-MM-dd")
 	@Column(name="dob")
-	private Date dob;
+	private LocalDate dob;
 	
 	@Column(name="address")
 	private String address;
@@ -50,7 +50,7 @@ public class User {
 		idGenerator=idGenerator+1 ;
 	}
 	
-	public User(int userid, String username, String name, String email, long mobile, Date dob, String address, String password) {
+	public User(int userid, String username, String name, String email, long mobile, LocalDate dob, String address, String password) {
 		super();
 		this.userid = idGenerator+1;
 		this.username = username;
@@ -63,7 +63,7 @@ public class User {
 		idGenerator=idGenerator+1 ;
 	}
 	
-	public User(String username, String name, String email, long mobile, Date dob, String address, String password) {
+	public User(String username, String name, String email, long mobile, LocalDate dob, String address, String password) {
 		super();
 		this.userid = idGenerator+1;
 		this.username = username;
@@ -114,10 +114,10 @@ public class User {
 	public void setMobile(long mobile) {
 		this.mobile = mobile;
 	}
-	public Date getDob() {
+	public LocalDate getDob() {
 		return dob;
 	}
-	public void setDob(Date dob) {
+	public void setDob(LocalDate dob) {
 		this.dob = dob;
 	}
 	public String getAddress() {

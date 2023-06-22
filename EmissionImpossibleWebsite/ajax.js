@@ -202,9 +202,9 @@ $(document).ready(function(){
                 $.ajax({
                     type: 'GET',
                     url: 'http://localhost:9999/profile/' + username,
-                    success: function(emissionsData) {
+                    success: function(userData) {
                         // Resolve the promise with the received data
-                        resolve(emissionsData);
+                        resolve(userData);
                     },
                     error: function(jqXHR, textStatus, errorThrown) {
                         if (jqXHR.responseJSON) {
@@ -218,6 +218,21 @@ $(document).ready(function(){
                 });
             });
         }
+
+        getProfileData()
+            .then(userData => {
+                // These functions will run only after getProfileData() has completed
+
+                $(".user-details #name").val(userData.name);
+                $(".user-details #username").val(userData.username);
+                $(".user-details #email").val(userData.email);
+                $(".user-details #dob").val(userData.dob);
+                $(".user-details #mobile").val(userData.mobile);
+                $(".user-details #address").val(userData.address);
+            })
+            .catch(error => {
+                console.error("Error:", error);
+            });
     }
 
 });
