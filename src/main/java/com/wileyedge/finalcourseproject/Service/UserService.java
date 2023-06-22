@@ -107,6 +107,7 @@ public class UserService implements IService {
 		result.put("byHeavyCar", byHeavyCar.toString());
 		result.put("byTrain", byTrain.toString());
 		result.put("byPlane", byPlane.toString());
+		result.put("total", total.toString());
 
 		return result;
 	}
