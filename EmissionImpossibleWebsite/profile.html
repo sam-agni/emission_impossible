@@ -29,7 +29,7 @@
                 <h2>Your details</h2>
                 <form id="detailForm">
                     <input class="edit-input" placeholder="Name" required id="name">
-                    <input class="edit-input" placeholder="Username" required id="username">
+                    <input class="edit-input" placeholder="Username" required id="username" disabled>
                     <input class="edit-input" type="email" placeholder="Email Address" required id="email">
                     <input class="edit-input" type="date" placeholder="Date of Birth" required id="dob">
                     <input class="edit-input" type="number" placeholder="Mobile" required id="mobile">
@@ -42,8 +42,8 @@
             <div class="password-details">
                 <h2>Change Password</h2>
                 <form id="changePasswordForm">
-                    <input type="password" class="edit-input" placeholder="Enter New password" required id="name">
-                    <input type="password" class="edit-input" placeholder="Re-enter new password" required id="username">
+                    <input type="password" class="edit-input" placeholder="Enter New password" required id="password">
+                    <input type="password" class="edit-input" placeholder="Re-enter new password" required id="confirmpassword">
                     <button type="submit" class="edit-password-button">Change Password</button>
                 </form>
             </div>
@@ -73,7 +73,7 @@
 
             <h3 class="set-manual-title">Set value manually:</h3>
             <div class="input-row">
-                <input class="manual-carbon-entry" placeholder="" required id="name">
+                <input class="manual-carbon-entry" placeholder="" required id="manualcarbonentry">
                 <p class="input-description">tCO2e / year</p>
             </div>
             

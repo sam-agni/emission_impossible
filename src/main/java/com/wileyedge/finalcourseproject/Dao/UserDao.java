@@ -2,6 +2,7 @@ package com.wileyedge.finalcourseproject.Dao;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -97,15 +98,21 @@ public class UserDao implements IDao {
 
 	@Override
 	public int editUserbyUsername(String username, User newInfo) {
-		String sql = "UPDATE User SET name=?, email=?, mobile=?, dob=?, address=?, password=? WHERE username=?";
-		return template.update(sql,
-					newInfo.getName(),
-					newInfo.getEmail(),
-					newInfo.getMobile(),
-					newInfo.getDob(),
-					newInfo.getAddress(),
-					newInfo.getPassword(),
-					username);
+	    // Get the current values
+	    User originalDetails = getUserByUsername(username);
+
+	    // If a value from newInfo is empty, then use the original value
+	    String name = (newInfo.getName() == null || newInfo.getName().isEmpty()) ? originalDetails.getName() : newInfo.getName();
+	    String email = (newInfo.getEmail() == null || newInfo.getEmail().isEmpty()) ? originalDetails.getEmail() : newInfo.getEmail();
+	    Long mobile = (newInfo.getMobile() == 0) ? originalDetails.getMobile() : newInfo.getMobile();
+	    LocalDate dob = (newInfo.getDob() == null) ? originalDetails.getDob() : newInfo.getDob();
+	    String address = (newInfo.getAddress() == null || newInfo.getAddress().isEmpty()) ? originalDetails.getAddress() : newInfo.getAddress();
+	    String password = (newInfo.getPassword() == null || newInfo.getPassword().isEmpty()) ? originalDetails.getPassword() : newInfo.getPassword();
+
+	    String sql = "UPDATE User SET name=?, email=?, mobile=?, dob=?, address=?, password=? WHERE username=?";
+	    return template.update(sql, name, email, mobile, dob, address, password, username);
 	}
+
+
 
 }

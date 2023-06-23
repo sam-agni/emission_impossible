@@ -27,7 +27,7 @@ $(document).ready(function(){
             data: JSON.stringify(loginData),
             contentType: 'application/json',
             success: function(data) {
-                alert('Login successful');
+                //alert('Login successful');
                 localStorage.setItem("username", loginData.username);
                 //alert("NAVIGATING TO HOME PAGE, REMOVE THIS LATER");
                 window.location.href = "home.html";
@@ -233,6 +233,83 @@ $(document).ready(function(){
             .catch(error => {
                 console.error("Error:", error);
             });
+
+        // Edit details
+        $("#detailForm").on("submit", function(event){
+            event.preventDefault();
+
+            var detailsData = {
+                name: $("#name").val(),
+                username: $("#username").val(),
+                email: $("#email").val(),
+                dob: $("#dob").val(),
+                mobile: $("#mobile").val(),
+                address: $("#address").val(),
+                password: ""
+            };
+
+            $.ajax({
+                type: 'POST',
+                url: 'http://localhost:9999/profile/edit/' + username,
+                data: JSON.stringify(detailsData),
+                contentType: 'application/json',
+                success: function(data) {
+                    alert('Update successful');
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    if (jqXHR.responseJSON) {
+                        alert('Error: ' + jqXHR.responseJSON.message);
+                    } else {
+                        alert('An unknown error occurred.');
+                    }
+                }
+            })
+
+        });
+
+        // Edit password
+        $("#changePasswordForm").on("submit", function(event){
+            event.preventDefault();
+
+            if($("#password").val() != $("#confirmpassword").val()){
+                alert("Passwords do not match!")
+                return
+            }
+
+            var detailsData = {
+                name: "",
+                username: "",
+                email: "",
+                dob: "",
+                mobile: "",
+                address: "",
+                password: $("#password").val()
+            };
+
+            $.ajax({
+                type: 'POST',
+                url: 'http://localhost:9999/profile/edit/' + username,
+                data: JSON.stringify(detailsData),
+                contentType: 'application/json',
+                success: function(data) {
+                    alert('Update successful');
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    if (jqXHR.responseJSON) {
+                        alert('Error: ' + jqXHR.responseJSON.message);
+                    } else {
+                        alert('An unknown error occurred.');
+                    }
+                }
+            })
+
+        });
+
+        $("#logout-button").click(function() {
+            localStorage.removeItem("username");
+            window.location.href = "landing_page.html";
+        });
+        
     }
 
 });
